@@ -19,3 +19,7 @@ You can just download repository, go to **<em> ./lib </em>** and run scripts fro
       
     
 ## For spec files you need to install rspec:
+
+gem install rspec
+    
+for more information just go https://github.com/rspec/rspec-metagem
