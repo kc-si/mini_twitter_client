@@ -86,6 +86,7 @@ if __FILE__ == $0
     when 4 then delete_tweet
     when 5 then del_author_tweets
     when 6 then del_all_tweets
+    when 7 then return
     end
 
     input = read_order
