@@ -13,20 +13,34 @@ class MiniTwitterClient
     )
   end
 
-  def fetch_tweets
-    response = connection.get
-
-    JSON.parse(response.body)['data'].map do |tweet|
+  def get_tweets
+    res = connection.get
+    data = JSON.parse(res.body)['data'].map do |tweet|
       {
         author: tweet['author'],
         id: tweet['id'],
         message: tweet['message']
       }
     end
+
+    {
+      status: res.status.to_i,
+      data:
+    }
   end
 
   def create_tweet(author, message)
-    connection.post { |post| post.body = { "tweet": { "author": author, "message": message } }.to_json }
+    res = connection.post { |post| post.body = { "tweet": { "author": author, "message": message } }.to_json }
+    tweet = JSON.parse(res.body)['data']
+
+    {
+      status: res.status.to_i,
+      data: {
+        author: tweet['author'],
+        id: tweet['id'],
+        message: tweet['message']
+      }
+    }
   end
 
   def del_tweet(id)
@@ -34,10 +48,10 @@ class MiniTwitterClient
   end
 
   def del_all_tweets
-    fetch_tweets.each { |tweet| del_tweet(tweet[:id]) }
+    get_tweets[:data].each { |tweet| del_tweet(tweet[:id]) }
   end
 
   def parse_tweets(author)
-    fetch_tweets.select { |tweet| tweet[:author].downcase == author.downcase }
+    get_tweets[:data].select { |tweet| tweet[:author].downcase == author.downcase }
   end
 end

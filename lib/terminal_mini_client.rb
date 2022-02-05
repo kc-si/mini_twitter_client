@@ -9,7 +9,7 @@ def read_order
   if ARGV[0]
     input = ARGV[0]
   else
-    puts("Type number of order (or type/chose EXIT if you want to quit) end press ENTER : \n
+    puts("Type number of order (or type/chose EXIT if you want to quit) end press ENTER: \n
           1. Create tweet \n
           2. Get and view an author tweets \n
           3. Get and view all tweets \n
@@ -23,7 +23,7 @@ def read_order
 end
 
 def get_input(parameter)
-  puts("Type tweet #{parameter} and press ENTER : \n")
+  puts("Type tweet #{parameter} and press ENTER: \n")
 
   input = gets
   input.chop
@@ -34,20 +34,21 @@ def post_tweet
   message = get_input('message')
 
   created_tweet = mini_twitter_client.create_tweet(author, message)
-  created_tweet = JSON.parse(created_tweet.body)['data']
 
-  puts("Success: \n Author : #{created_tweet['author']} \n id : #{created_tweet['id']}") if created_tweet['id']
+  if created_tweet[:status] == 201
+    puts("Success: \n Author: #{created_tweet[:data][:author]} \n id: #{created_tweet[:data][:id]}")
+  end
 end
 
 def disp_author_tweets
   author = get_input('author')
   mini_twitter_client.parse_tweets(author).each do |tweet|
-    puts("Author : #{tweet[:author]}, message : #{tweet[:message]}, id : #{tweet[:id]}")
+    puts("Author: #{tweet[:author]}, message: #{tweet[:message]}, id: #{tweet[:id]}")
   end
 end
 
 def disp_tweets
-  mini_twitter_client.fetch_tweets.each { |tweet| puts("Author : #{tweet[:author]}, message : #{tweet[:message]}") }
+  mini_twitter_client.get_tweets[:data].each { |tweet| puts("Author: #{tweet[:author]}, message: #{tweet[:message]}") }
 end
 
 def delete_tweet(id = nil)
@@ -60,7 +61,7 @@ end
 
 def del_author_tweets
   author = get_input('author')
-  mini_twitter_client.fetch_tweets.each { |tweet| tweet[:author] == author ? delete_tweet(tweet[:id]) : nil }
+  mini_twitter_client.get_tweets[:data].each { |tweet| tweet[:author] == author ? delete_tweet(tweet[:id]) : nil }
 end
 
 if __FILE__ == $0
