@@ -42,7 +42,7 @@ end
 
 def disp_author_tweets
   author = get_input('author')
-  mini_twitter_client.parse_tweets(author).each do |tweet|
+  mini_twitter_client.get_author_tweets(author).each do |tweet|
     puts("Author: #{tweet[:author]}, message: #{tweet[:message]}, id: #{tweet[:id]}")
   end
 end
@@ -61,7 +61,7 @@ end
 
 def del_author_tweets
   author = get_input('author')
-  mini_twitter_client.get_tweets[:data].each { |tweet| tweet[:author] == author ? delete_tweet(tweet[:id]) : nil }
+  mini_twitter_client.get_author_tweets(author).each { |tweet| delete_tweet(tweet[:id]) }
 end
 
 if __FILE__ == $0

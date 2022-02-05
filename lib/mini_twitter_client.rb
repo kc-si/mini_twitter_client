@@ -51,7 +51,7 @@ class MiniTwitterClient
     get_tweets[:data].each { |tweet| del_tweet(tweet[:id]) }
   end
 
-  def parse_tweets(author)
-    get_tweets[:data].select { |tweet| tweet[:author].downcase == author.downcase }
+  def get_author_tweets(author)
+    get_tweets[:data].select { |tweet| tweet[:author] == author }
   end
 end
