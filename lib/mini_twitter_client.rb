@@ -17,7 +17,10 @@ class MiniTwitterClient
     res = connection.get
     data = JSON.parse(res.body)['data'].map do |tweet|
       {
-        author: tweet['author'],
+        author: {
+          name: tweet['author']['name'],
+          email: tweet['author']['email']
+        },
         id: tweet['id'],
         message: tweet['message']
       }
@@ -29,14 +32,17 @@ class MiniTwitterClient
     }
   end
 
-  def create_tweet(author, message)
-    res = connection.post { |post| post.body = { "tweet": { "author": author, "message": message } }.to_json }
+  def create_tweet(name, email, message)
+    res = connection.post { |post| post.body = { "tweet": { "author": { "name": name, "email": email }, "message": message } }.to_json }
     tweet = JSON.parse(res.body)['data']
 
     {
       status: res.status.to_i,
       data: {
-        author: tweet['author'],
+        author: {
+          name: tweet['author']['name'],
+          email: tweet['author']['email']
+        },
         id: tweet['id'],
         message: tweet['message']
       }
@@ -52,6 +58,6 @@ class MiniTwitterClient
   end
 
   def get_author_tweets(author)
-    get_tweets[:data].select { |tweet| tweet[:author] == author }
+    get_tweets[:data].select { |tweet| tweet[:author][:name] == author }
   end
 end

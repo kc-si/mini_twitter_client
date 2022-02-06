@@ -6,20 +6,16 @@ def mini_twitter_client
 end
 
 def read_order
-  if ARGV[0]
-    input = ARGV[0]
-  else
-    puts("Type number of order (or type/chose EXIT if you want to quit) end press ENTER: \n
-          1. Create tweet \n
-          2. Get and view an author tweets \n
-          3. Get and view all tweets \n
-          4. Delete tweet \n
-          5. Delete author's tweets \n
-          6. Delete all tweets \n
-          0. Exit ")
-    input = gets
-    input.chop
-  end
+  puts("Type number of order (or type/chose EXIT if you want to quit) end press ENTER: \n
+        1. Create tweet \n
+        2. Get and view an author tweets \n
+        3. Get and view all tweets \n
+        4. Delete tweet \n
+        5. Delete author's tweets \n
+        6. Delete all tweets \n
+        0. Exit ")
+  input = gets
+  input.chop
 end
 
 def get_input(parameter)
@@ -30,25 +26,29 @@ def get_input(parameter)
 end
 
 def post_tweet
-  author = get_input('author')
+  name = get_input('name')
+  email = get_input('email')
   message = get_input('message')
 
-  created_tweet = mini_twitter_client.create_tweet(author, message)
+  created_tweet = mini_twitter_client.create_tweet(name, email, message)
 
   if created_tweet[:status] == 201
-    puts("Success: \n Author: #{created_tweet[:data][:author]} \n id: #{created_tweet[:data][:id]}")
+    puts("Success: \n Author: #{created_tweet[:data][:author][:name]} \n id: #{created_tweet[:data][:id]}")
   end
 end
 
 def disp_author_tweets
-  author = get_input('author')
-  mini_twitter_client.get_author_tweets(author).each do |tweet|
-    puts("Author: #{tweet[:author]}, message: #{tweet[:message]}, id: #{tweet[:id]}")
+  name = get_input('name')
+  mini_twitter_client.get_author_tweets(name).each do |tweet|
+    puts("Author: #{tweet[:author][:name]}, email: #{tweet[:author][:email]}")
+    puts("message: #{tweet[:message]}, id: #{tweet[:id]}")
   end
 end
 
 def disp_tweets
-  mini_twitter_client.get_tweets[:data].each { |tweet| puts("Author: #{tweet[:author]}, message: #{tweet[:message]}") }
+  mini_twitter_client.get_tweets[:data].each do |tweet|
+    puts("Author: #{tweet[:author][:name]}, message: #{tweet[:message]}")
+  end
 end
 
 def delete_tweet(id = nil)
@@ -56,12 +56,12 @@ def delete_tweet(id = nil)
 
   response = mini_twitter_client.del_tweet(id)
 
-  puts("Tweet id: #{id} deleted.") if [200, 201, 204].include?(response.status)
+  puts("Tweet id: #{id} deleted.") if response.status == 204
 end
 
 def del_author_tweets
-  author = get_input('author')
-  mini_twitter_client.get_author_tweets(author).each { |tweet| delete_tweet(tweet[:id]) }
+  name = get_input('authors name')
+  mini_twitter_client.get_author_tweets(name).each { |tweet| delete_tweet(tweet[:id]) }
 end
 
 if __FILE__ == $0
@@ -77,7 +77,6 @@ if __FILE__ == $0
     when 4 then delete_tweet
     when 5 then del_author_tweets
     when 6 then del_all_tweets
-    when 7 then return
     end
 
     input = read_order
