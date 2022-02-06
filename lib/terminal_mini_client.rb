@@ -76,7 +76,7 @@ if __FILE__ == $0
     when 3 then disp_tweets
     when 4 then delete_tweet
     when 5 then del_author_tweets
-    when 6 then del_all_tweets
+    when 6 then mini_twitter_client.del_all_tweets
     end
 
     input = read_order
