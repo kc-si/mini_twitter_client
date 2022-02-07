@@ -22,7 +22,7 @@ To work with mini_twitter_client, you need Ruby, and Faraday library:
 
 https://github.com/postmodern/ruby-install
 
-gem install faraday
+      gem install faraday
 
 Now, you can just download this repository.
 Then go to **<em> ./lib </em>** and run scripts from command line,  exmaple :
@@ -32,6 +32,6 @@ Then go to **<em> ./lib </em>** and run scripts from command line,  exmaple :
 
 ## For spec files you need to install rspec:
 
-gem install rspec
+      gem install rspec
 
 for more information just go https://github.com/rspec/rspec-metagem
