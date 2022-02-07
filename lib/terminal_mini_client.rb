@@ -22,9 +22,38 @@ class CLI
 
   def get_input(parameter)
     puts("Type tweet #{parameter} and press ENTER: \n")
+    case parameter
+    when 'name' then input = get_name
+    when 'email' then input = get_email
+    when 'message' then input = gets.chop
+    when 'id' then input = gets.chop
+    end
 
-    input = gets
-    input.chop
+    input
+  end
+
+  def get_name
+    5.times do
+      input = gets.chop
+      if input.size < 3
+        puts("Name too short. Type minimum 3 chars: \n")
+      else
+        return input
+      end
+    end
+    input
+  end
+
+  def get_email
+    5.times do
+      input = gets.chop
+      if input.size < 5 || !input.include?('@')
+        puts("Email has to have: @ and minimum 5 chars. Type email: \n")
+      else
+        return input
+      end
+    end
+    input
   end
 
   def post_tweet
