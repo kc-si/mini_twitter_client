@@ -6,7 +6,7 @@
 
  **mini_twitter_client/lib**  - scripts and lib files:
 
-**<em> mini_twitter_client.rb </em>**  - mini twitter client engine
+**<em> mini_twitter_client.rb </em>**  - mini twitter client engine  
  **<em> terminal_mini_client.rb </em>**  - terminal version
 
  **mini_twitter_client/spec**  - specification/test file
