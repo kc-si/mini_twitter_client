@@ -35,25 +35,25 @@ class CLI
     created_tweet = @mini_twitter_client.create_tweet(name, email, message)
 
     if created_tweet[:status] == 201
-      puts("Success: \n Author: #{created_tweet[:data][:author][:name]} \n id: #{created_tweet[:data][:id]}")
+      puts("Success: \n Author: #{created_tweet[:data].name} \n id: #{created_tweet[:data].id}")
     end
   end
 
   def get_author_tweets(name)
-    @mini_twitter_client.get_tweets[:data].select { |tweet| tweet[:author][:name] == name }
+    @mini_twitter_client.get_tweets[:data].select { |tweet| tweet.name == name }
   end
 
   def disp_author_tweets
     name = get_input('name')
     get_author_tweets(name).each do |tweet|
-      puts("Author: #{tweet[:author][:name]}, email: #{tweet[:author][:email]}")
-      puts("message: #{tweet[:message]}, id: #{tweet[:id]}")
+      puts("Author: #{tweet.name}, email: #{tweet.email}")
+      puts("message: #{tweet.message}, id: #{tweet.id}")
     end
   end
 
   def disp_tweets
     @mini_twitter_client.get_tweets[:data].each do |tweet|
-      puts("Author: #{tweet[:author][:name]}, message: #{tweet[:message]}")
+      puts("Author: #{tweet.name}, message: #{tweet.message}")
     end
   end
 
@@ -63,7 +63,7 @@ class CLI
     email = get_input('email')
     message = get_input('message')
 
-    response = @mini_twitter_client.update_tweet(id, name, email, message)
+    response = @mini_twitter_client.update_tweet(name, email, message, id)
 
     puts("Tweet id: #{id} updated.") if response[:status] == 200
   end
@@ -77,11 +77,11 @@ class CLI
 
   def del_author_tweets
     name = get_input('authors name')
-    get_author_tweets(name).each { |tweet| del_tweet(tweet[:id]) }
+    get_author_tweets(name).each { |tweet| del_tweet(tweet.id) }
   end
 
   def del_all_tweets
-    @mini_twitter_client.get_tweets[:data].each { |tweet| @mini_twitter_client.delete_tweet(tweet[:id]) }
+    @mini_twitter_client.get_tweets[:data].each { |tweet| @mini_twitter_client.delete_tweet(tweet.id) }
     puts('Tweets deleted')
   end
 end

@@ -8,15 +8,17 @@ class Tweet
     @message = message
     @id =id
   end
-  def data
-    {
-      author: {
-        name: @name,
-        email: @email
-      },
-      message: @message,
-      id: @id
-    }
+  def name
+    @name
+  end
+  def email
+    @email
+  end
+  def message
+    @message
+  end
+  def id
+    @id
   end
 end
 
@@ -30,14 +32,12 @@ class MiniTwitterClient
         'Content-Type' => 'application/json'
       }
     )
-    # @tweet = Tweet.new()
-
   end
 
   def get_tweets
     res = @connection.get('/api/tweets')
     data = JSON.parse(res.body)['data'].map do |tweet|
-      Tweet.new(tweet['author']['name'], tweet['author']['email'], tweet['message'], tweet['id']).data
+      Tweet.new(tweet['author']['name'], tweet['author']['email'], tweet['message'], tweet['id'])
     end
 
     {
@@ -54,7 +54,7 @@ class MiniTwitterClient
 
     {
       status: res.status.to_i,
-      data: Tweet.new(tweet['author']['name'], tweet['author']['email'], tweet['message'], tweet['id']).data
+      data: Tweet.new(tweet['author']['name'], tweet['author']['email'], tweet['message'], tweet['id'])
     }
   end
 
@@ -63,11 +63,11 @@ class MiniTwitterClient
 
     {
       status: res.status.to_i,
-      data: Tweet.new().data
+      data: Tweet.new()
     }
   end
 
-  def update_tweet(id, name, email, message)
+  def update_tweet(name, email, message, id)
     res = @connection.put("/api/tweets/#{id}") do |put|
       put.body = { "tweet": { "author": { "name": name, "email": email }, "message": message, "id": id } }.to_json
     end
@@ -75,7 +75,7 @@ class MiniTwitterClient
 
     {
       status: res.status.to_i,
-      data: Tweet.new(tweet['author']['name'], tweet['author']['email'], tweet['message'], tweet['id']).data
+      data: Tweet.new(tweet['author']['name'], tweet['author']['email'], tweet['message'], tweet['id'])
     }
   end
 end
