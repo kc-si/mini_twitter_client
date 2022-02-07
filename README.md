@@ -18,9 +18,11 @@ First you need to install mini twitter from here:
 https://github.com/marekciupak/mini_twitter
 
 
-To work with mini_twitter_client, you need Ruby, and Faraday library:
+To work with mini_twitter_client, you need Ruby:
 
 https://github.com/postmodern/ruby-install
+
+and Faraday library:
 
       gem install faraday
 
