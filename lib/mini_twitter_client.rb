@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 require_relative 'tweet'
-require 'debug'
+
 class Response
   def initialize(status:, data:)
     @status = status

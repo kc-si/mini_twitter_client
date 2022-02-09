@@ -8,21 +8,13 @@ class Author
   end
 end
 
-class Tweet < Author
+class Tweet
+  attr_reader :author, :message, :id
+
   def initialize(author:, message:, id:)
     @author = author
     @message = message
     @id = id
-  end
-
-  def author
-    @author
-  end
-  def message
-    @message
-  end
-  def id
-    @id
   end
 
   def self.build_from_hash(tweet)
