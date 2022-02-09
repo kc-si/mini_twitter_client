@@ -6,10 +6,10 @@
 
  **mini_twitter_client/lib**  - scripts and lib files:
 
-**<em> mini_twitter_client.rb </em>**  - mini twitter client engine  
- **<em> terminal_mini_client.rb </em>**  - terminal version
+**<em> mini_twitter_client.rb </em>**  - mini twitter client engine
+ **<em> cli.rb </em>**  - terminal version
 
- **mini_twitter_client/spec**  - specification/test file
+ **mini_twitter_client/spec**  - specification/test files
 
 ## Installation:
 
@@ -29,7 +29,7 @@ and Faraday library:
 Now, you can just download this repository.
 Then go to **<em> ./lib </em>** and run scripts from command line,  exmaple :
 
-      ruby mini_twitter_client.rb
+      ruby cli.rb
 
 
 ## For spec files you need to install rspec:
