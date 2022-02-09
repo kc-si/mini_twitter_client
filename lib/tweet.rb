@@ -1,16 +1,22 @@
-class Tweet
-  def initialize(name:, email:, message:, id:)
+class Author
+  attr_accessor :name
+  attr_accessor :email
+
+  def initialize(name: nil, email: nil)
     @name = name
     @email = email
+  end
+end
+
+class Tweet < Author
+  def initialize(author:, message:, id:)
+    @author = author
     @message = message
     @id = id
   end
 
-  def name
-    @name
-  end
-  def email
-    @email
+  def author
+    @author
   end
   def message
     @message
@@ -21,8 +27,10 @@ class Tweet
 
   def self.build_from_hash(tweet)
     Tweet.new(
-      name: tweet['author']['name'],
-      email: tweet['author']['email'],
+      author: Author.new(
+        name: tweet['author']['name'],
+        email: tweet['author']['email']
+      ),
       message: tweet['message'],
       id: tweet['id']
     )

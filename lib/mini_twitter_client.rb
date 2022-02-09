@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 require_relative 'tweet'
-
+require 'debug'
 class Response
   def initialize(status:, data:)
     @status = status
@@ -43,12 +43,12 @@ class MiniTwitterClient
     Response.new(status: res.status.to_i, data: Tweet.build_from_hash(tweet))
   end
 
-  def create_tweet(name, email, message)
+  def create_tweet(author, message)
     body = {
       "tweet": {
         "author": {
-          "name": name,
-          "email": email
+          "name": author.name,
+          "email": author.email
         },
         "message": message
       }
@@ -65,12 +65,12 @@ class MiniTwitterClient
     Response.new(status: res.status.to_i, data: nil)
   end
 
-  def update_tweet(name, email, message, id)
+  def update_tweet(author, message, id)
     body = {
       "tweet": {
         "author": {
-          "name": name,
-          "email": email
+          "name": author.name,
+          "email": author.email
         },
         "message": message,
         "id": id
