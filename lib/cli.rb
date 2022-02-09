@@ -9,12 +9,13 @@ class CLI
   def read_order
     puts("Type number of order (or type/chose EXIT if you want to quit) end press ENTER: \n
           1. Create tweet \n
-          2. Get and view an author tweets \n
-          3. Get and view all tweets \n
-          4. Update tweet \n
-          5. Delete tweet \n
-          6. Delete author's tweets \n
-          7. Delete all tweets \n
+          2. Get and tweet by id \n
+          3. Get and view an author tweets \n
+          4. Get and view all tweets \n
+          5. Update tweet \n
+          6. Delete tweet \n
+          7. Delete author's tweets \n
+          8. Delete all tweets \n
           0. Exit ")
     input = gets
     input.chop
@@ -63,13 +64,20 @@ class CLI
 
     created_tweet = @mini_twitter_client.create_tweet(name, email, message)
 
-    if created_tweet[:status] == 201
-      puts("Success: \n Author: #{created_tweet[:data].name} \n id: #{created_tweet[:data].id}")
+    if created_tweet.status == 201
+      puts("Success: \n Author: #{created_tweet.data.name} \n id: #{created_tweet.data.id}")
     end
   end
 
   def get_author_tweets(name)
-    @mini_twitter_client.get_tweets[:data].select { |tweet| tweet.name == name }
+    @mini_twitter_client.get_tweets.data.select { |tweet| tweet.name == name }
+  end
+
+  def disp_tweet
+    id = get_input('id')
+    tweet = @mini_twitter_client.get_tweet(id).data
+    puts("Author: #{tweet.name}, email: #{tweet.email}")
+    puts("message: #{tweet.message}, id: #{tweet.id}")
   end
 
   def disp_author_tweets
@@ -81,7 +89,7 @@ class CLI
   end
 
   def disp_tweets
-    @mini_twitter_client.get_tweets[:data].each do |tweet|
+    @mini_twitter_client.get_tweets.data.each do |tweet|
       puts("Author: #{tweet.name}, message: #{tweet.message}")
     end
   end
@@ -94,23 +102,23 @@ class CLI
 
     response = @mini_twitter_client.update_tweet(name, email, message, id)
 
-    puts("Tweet id: #{id} updated.") if response[:status] == 200
+    puts("Tweet id: #{id} updated.") if response.status == 200
   end
 
   def del_tweet(id = nil)
     id = get_input('id') if id.nil?
 
     response = @mini_twitter_client.delete_tweet(id)
-    puts("Tweet id: #{id} deleted.") if response[:status] == 204
+    puts("Tweet id: #{id} deleted.") if response.status == 204
   end
 
   def del_author_tweets
-    name = get_input('authors name')
+    name = get_input('name')
     get_author_tweets(name).each { |tweet| del_tweet(tweet.id) }
   end
 
   def del_all_tweets
-    @mini_twitter_client.get_tweets[:data].each { |tweet| @mini_twitter_client.delete_tweet(tweet.id) }
+    @mini_twitter_client.get_tweets.data.each { |tweet| @mini_twitter_client.delete_tweet(tweet.id) }
     puts('Tweets deleted')
   end
 end
@@ -125,12 +133,13 @@ if __FILE__ == $0
 
     case input.to_i
     when 1 then cli.post_tweet
-    when 2 then cli.disp_author_tweets
-    when 3 then cli.disp_tweets
-    when 4 then cli.upd_tweet
-    when 5 then cli.del_tweet
-    when 6 then cli.del_author_tweets
-    when 7 then cli.del_all_tweets
+    when 2 then cli.disp_tweet
+    when 3 then cli.disp_author_tweets
+    when 4 then cli.disp_tweets
+    when 5 then cli.upd_tweet
+    when 6 then cli.del_tweet
+    when 7 then cli.del_author_tweets
+    when 8 then cli.del_all_tweets
     end
 
     input = cli.read_order
