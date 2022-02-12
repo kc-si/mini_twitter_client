@@ -27,13 +27,6 @@ and gem libraries:
       bundle install
 
 Now, you can just download this repository.
-Then go to **<em> ./lib </em>** and run scripts from command line,  exmaple :
+Then go to **<em> ./lib </em>** and run scripts from command line:
 
       ruby cli.rb
-
-
-## For spec files you need to install rspec:
-
-      gem install rspec
-
-for more information just go https://github.com/rspec/rspec-metagem
