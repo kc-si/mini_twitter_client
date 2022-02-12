@@ -23,10 +23,10 @@ class CLI
   def get_input(parameter)
     puts("Type tweet #{parameter} and press ENTER: \n")
     case parameter
-    when 'name' then input = get_name
-    when 'email' then input = get_email
-    when 'message' then input = gets.chop
-    when 'id' then input = gets.chop
+      when 'name' then input = get_name
+      when 'email' then input = get_email
+      when 'message' then input = gets.chop
+      when 'id' then input = gets.chop
     end
 
     input
@@ -132,14 +132,14 @@ if __FILE__ == $0
   until input.downcase == 'exit' || input.to_i.zero?
 
     case input.to_i
-    when 1 then cli.post_tweet
-    when 2 then cli.disp_tweet
-    when 3 then cli.disp_author_tweets
-    when 4 then cli.disp_tweets
-    when 5 then cli.upd_tweet
-    when 6 then cli.del_tweet
-    when 7 then cli.del_author_tweets
-    when 8 then cli.del_all_tweets
+      when 1 then cli.post_tweet
+      when 2 then cli.disp_tweet
+      when 3 then cli.disp_author_tweets
+      when 4 then cli.disp_tweets
+      when 5 then cli.upd_tweet
+      when 6 then cli.del_tweet
+      when 7 then cli.del_author_tweets
+      when 8 then cli.del_all_tweets
     end
 
     input = cli.read_order

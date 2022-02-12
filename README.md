@@ -22,9 +22,9 @@ To work with mini_twitter_client, you need Ruby:
 
 https://github.com/postmodern/ruby-install
 
-and Faraday library:
+and gem libraries:
 
-      gem install faraday
+      bundle install
 
 Now, you can just download this repository.
 Then go to **<em> ./lib </em>** and run scripts from command line,  exmaple :

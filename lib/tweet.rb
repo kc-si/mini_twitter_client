@@ -13,7 +13,7 @@ class Tweet
     Tweet.new(
       author: Author.build_from_hash(tweet['author']),
       message: tweet['message'],
-      id: tweet['id']
+      id: tweet['id'],
     )
   end
 end

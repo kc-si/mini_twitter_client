@@ -10,8 +10,8 @@ class MiniTwitterClient
       url: 'http://localhost:4000',
       headers: {
         'Accept' => 'application/json',
-        'Content-Type' => 'application/json'
-      }
+        'Content-Type' => 'application/json',
+      },
     )
   end
 
@@ -33,13 +33,13 @@ class MiniTwitterClient
 
   def create_tweet(author, message)
     body = {
-      "tweet": {
-        "author": {
-          "name": author.name,
-          "email": author.email
+      tweet: {
+        author: {
+          name: author.name,
+          email: author.email,
         },
-        "message": message
-      }
+        message:,
+      },
     }.to_json
     res = @connection.post('/api/tweets', body)
     tweet = JSON.parse(res.body)['data']
@@ -55,14 +55,14 @@ class MiniTwitterClient
 
   def update_tweet(author, message, id)
     body = {
-      "tweet": {
-        "author": {
-          "name": author.name,
-          "email": author.email
+      tweet: {
+        author: {
+          name: author.name,
+          email: author.email,
         },
-        "message": message,
-        "id": id
-      }
+        message:,
+        id:,
+      },
     }.to_json
     res = @connection.put("/api/tweets/#{id}", body)
     tweet = JSON.parse(res.body)['data']
