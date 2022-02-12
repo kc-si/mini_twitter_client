@@ -1,16 +1,14 @@
 require_relative 'mini_twitter_client'
-require 'json'
 
 class CLI
   def initialize
     @mini_twitter_client = MiniTwitterClient.new
-    @author = Author.new
   end
 
   def read_order
     puts("Type number of order (or type/chose EXIT if you want to quit) end press ENTER: \n
           1. Create tweet \n
-          2. Get and tweet by id \n
+          2. Get tweet by id \n
           3. Get and view an author tweets \n
           4. Get and view all tweets \n
           5. Update tweet \n
@@ -59,11 +57,12 @@ class CLI
   end
 
   def post_tweet
-    @author.name = get_input('name')
-    @author.email = get_input('email')
+    name = get_input('name')
+    email = get_input('email')
     message = get_input('message')
+    author = Author.new(name:, email:)
 
-    created_tweet = @mini_twitter_client.create_tweet(@author, message)
+    created_tweet = @mini_twitter_client.create_tweet(author, message)
 
     if created_tweet.status == 201
       puts("Success: \n Author: #{created_tweet.data.author.name} \n id: #{created_tweet.data.id}")

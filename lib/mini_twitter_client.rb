@@ -1,20 +1,8 @@
 require 'faraday'
 require 'json'
 require_relative 'tweet'
-
-class Response
-  def initialize(status:, data:)
-    @status = status
-    @data = data
-  end
-
-  def status
-    @status
-  end
-  def data
-    @data
-  end
-end
+require_relative 'author'
+require_relative 'response'
 
 class MiniTwitterClient
   def initialize
@@ -74,8 +62,8 @@ class MiniTwitterClient
         },
         "message": message,
         "id": id
-        }
-      }.to_json
+      }
+    }.to_json
     res = @connection.put("/api/tweets/#{id}", body)
     tweet = JSON.parse(res.body)['data']
 
