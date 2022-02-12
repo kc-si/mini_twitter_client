@@ -22,11 +22,15 @@ To work with mini_twitter_client, you need Ruby:
 
 https://github.com/postmodern/ruby-install
 
-and gem libraries:
+Now, you can just download this repository.
+
+Install gem libraries:
+To install go to main of this repository and run from command line:
 
       bundle install
-
-Now, you can just download this repository.
+      
 Then go to **<em> ./lib </em>** and run scripts from command line:
 
       ruby cli.rb
+
+
