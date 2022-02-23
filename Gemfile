@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 # gem "rails"
 
 # gem
-gem 'rspec'
-gem 'guard'
+gem 'activerecord'
 gem 'faraday'
+gem 'guard'
 gem 'json'
+gem 'rspec'

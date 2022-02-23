@@ -16,4 +16,12 @@ class Tweet
       id: tweet['id'],
     )
   end
+
+  def self.build_from_db(tweet)
+    Tweet.new(
+      author: Author.build_from_db(tweet),
+      message: tweet.message,
+      id: tweet.id,
+    )
+  end
 end

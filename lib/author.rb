@@ -12,4 +12,11 @@ class Author
       email: author['email'],
     )
   end
+
+  def self.build_from_db(tweet)
+    Author.new(
+      name: tweet.author_name,
+      email: tweet.author_email,
+    )
+  end
 end
